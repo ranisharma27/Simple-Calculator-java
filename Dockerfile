@@ -1,25 +1,25 @@
-#step 1:Build Stage -using base image to run java application
+# Step 1: Build Stage - using base image to compile Java
 FROM openjdk:17-jdk-slim AS build
 
-#going into the directory 
+# Set working directory
 WORKDIR /app
 
-#copy source code 
+# Copy source code
 COPY Calculator.java .
 
-#compile the code
+# Compile Java code
 RUN javac Calculator.java
 
-#package into jar file
-jar cfe Calculator.jar Calculator Calculator.class
+# Package into a runnable JAR
+RUN jar cfe Calculator.jar Calculator Calculator.class
 
-#step2: run app
-
-From openjdk:17-jdk-slim
+# Step 2: Runtime Stage
+FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-# copy the files build in build stage
+# Copy JAR from build stage
 COPY --from=build /app/Calculator.jar .
 
-ENTRYPOINT ["java","-jar","Calculator.java"]
+# Run the application
+ENTRYPOINT ["java","-jar","Calculator.jar"]
