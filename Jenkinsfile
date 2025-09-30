@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'git@github.com:ranisharma27/Simple-Calculator-java.git', credentialsId: 'github-ssh'
+                git branch: 'main', url: 'https://github.com/ranisharma27/Simple-Calculator-java.git', credentialsId: 'github-https'
             }
         }
 
